@@ -3,8 +3,10 @@
 #include<string.h>
 #include<time.h>
 
-#define MAX_NOTE 256
-
+struct Note{
+    char content[256];
+    char timestamp[64];
+};
 int main(){
     int ch;
     void add_note();
@@ -29,35 +31,37 @@ int main(){
     return 0;
     }
 void add_note(){
-    FILE *file = fopen("notes.txt","a");
+    FILE *file = fopen("notes.dat","ab");//binary mode
     if (file == NULL){
         printf("error opening the file");
         return;
     }
 
-    char note[MAX_NOTE];
-    time_t now;
-    time(&now);
+    struct Note note;
 
-    printf("Enter your note\n");
+    time_t now = time(NULL);
+    strcpy(note.timestamp, ctime(&now));
+    note.timestamp[strcspn(note.timestamp, "\n")] = '\0';
+
+    printf("Enter your note: ");
     getchar();
-    fgets(note, MAX_NOTE, stdin);
+    fgets(note.content, 256, stdin);
 
-    fprintf(file, "\n[%s]%s",ctime(&now), note);
+    fwrite(&note, sizeof(struct Note), 1, file);
     fclose(file);
-
     printf("Note saved!\n");
 }  
 void view_notes(){
-    FILE *file = fopen("notes.txt","r");
+    FILE *file = fopen("notes.dat","rb");//read binary
     if (file == NULL){
         printf("No notes found");
         return;
     }
-    char ch;
+    
+    struct Note note;
     printf("\n---Your Notes---\n");
-    while((ch=fgetc(file)) != EOF){
-        putchar(ch);
+    while(fread(&note, sizeof(struct Note), 1, file)){
+        printf("[%s] %s\n", note.timestamp, note.content);
     }
     fclose(file);
     printf("\n--------------------\n");
