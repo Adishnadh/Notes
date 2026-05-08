@@ -9,6 +9,7 @@ int main(){
     int ch;
     void add_note();
     void view_note();
+
     void update_note();
     void delete_note();
 
