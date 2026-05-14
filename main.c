@@ -4,16 +4,35 @@
 #include<time.h>
 #include "note.h"
 #include "note_fun.h"
+#include "note_list.h"
 
-int main(){
-    int ch;
-    void add_note();
-    void view_note();
+int main(/*int argc, char *argv[]*/){
 
-    void update_note();
-    void delete_note();
+    //int ch;
+    void add_note(char fname[20]);
+    void view_note(char fname[20]);
+    void add_to_index(const char *filename);
+    void view_index();
+/*
+    if(argc<2|| argc>2){
+        printf("Usage : %s <filename>\n ", argv[0]);
+        return 1;
+    }*/
+    char name[20];
 
-    while(1){
+    view_index();
+    printf("Select file name from index or create a file: ");
+    //getchar();
+    fgets(name,sizeof(name),stdin);
+   //strcpy(name,argv[1]);
+   name[strcspn(name,"\n")]='\0';
+   add_to_index(name);
+
+   strcat(name,".dat");
+    //void update_note();
+    //void delete_note();
+
+    /*while(1){
         printf("1.Add notes\n");
         printf("2.View notes\n");
         printf("3.Update notes\n");
@@ -36,6 +55,12 @@ int main(){
                 printf("---Good Bye!---\n");
                 exit(0);
         }
+    }*/
+    while(1){
+        printf("\033[H\033[J");
+        view_note(name);
+        
+        add_note(name);
     }
     return 0;
     }

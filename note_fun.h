@@ -1,8 +1,8 @@
 #ifndef NOTE_FUN
 #define NOTE_FUN
 
-void add_note(){
-    FILE *file = fopen("notes.dat","ab");//binary mode
+void add_note(char fname[20]){
+    FILE *file = fopen(fname,"ab");//binary mode
     if (file == NULL){
         printf("error opening the file");
         return;
@@ -20,7 +20,7 @@ void add_note(){
     strcpy(note.timestamp, time_buffer);
 
     printf("Enter your note: ");
-    getchar();
+    //getchar();
     fgets(buffer, sizeof(buffer), stdin);
     buffer[strcspn(buffer, "\n")]='\0';
     note.content = malloc(strlen(buffer)+1);
@@ -44,8 +44,8 @@ void add_note(){
     free(note.timestamp);
     printf("\nNote saved!\n");
 } 
-void view_note(){
-    FILE *file = fopen("notes.dat","rb");//read binary
+void view_note(char fname[20]){
+    FILE *file = fopen(fname,"rb");//read binary
     if (file == NULL){
         printf("No notes found\n");
         return;
@@ -75,8 +75,8 @@ void view_note(){
     printf("\n--------------------\n");
 }
 
-void update_note(){
-    FILE * file = fopen("notes.dat","rb");
+/*void update_note(){
+    FILE * file = fopen(name,"rb");
     if(file == NULL){
         printf("no notes found");
         return;
@@ -159,12 +159,12 @@ void update_note(){
     fclose(temp);
 
 
-    remove("notes.dat");
-    rename("temp.dat", "notes.dat");
+    remove(name);
+    rename("temp.dat", name);
 }
 void delete_note(){
 
-    FILE *file = fopen("notes.dat","rb");
+    FILE *file = fopen(name,"rb");
 
     if(file == NULL){
         printf("No notes found\n");
@@ -176,7 +176,7 @@ void delete_note(){
     struct Note note;
 
     int target;
-    int index = 1;
+    int index = 1, found =0;
     int content_len;
     int timestamp_len;
 
@@ -194,17 +194,17 @@ void delete_note(){
         note.timestamp = malloc(timestamp_len);
         fread(note.timestamp,sizeof(char), timestamp_len,file);
         if(index != target){
-            content_len = strlen(note.content)+1;
     fwrite(&content_len, sizeof(int), 1,temp);//length of string is written in file
     fwrite(note.content, sizeof(char), content_len, temp);// conent written in the file 
 
-    timestamp_len= strlen(note.timestamp)+1;
     fwrite(&timestamp_len, sizeof(int), 1, temp);
     fwrite(note.timestamp, sizeof(char), timestamp_len, temp);// time stamp written in the file
     }
+    else{
+        found=1;}
     free(note.content);
     free(note.timestamp);
-        index++;        
+        index++;
     }
 
     fclose(file);
@@ -213,8 +213,13 @@ void delete_note(){
     remove("notes.dat");
 
     rename("temp.dat","notes.dat");
+    if (found)
+        printf("Note deleted!\n");
+        else
+            printf("Invalid note number\n");
 
-    printf("Note deleted!\n");
-} 
+
+}
+*/
 #endif
 
