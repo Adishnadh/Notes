@@ -11,7 +11,7 @@ int main(/*int argc, char *argv[]*/){
     //int ch;
     void add_note(char fname[20]);
     void view_note(char fname[20]);
-    void add_to_index(const char *filename);
+    void add_to_index (const char *filename);
     void view_index();
 /*
     if(argc<2|| argc>2){
@@ -28,7 +28,8 @@ int main(/*int argc, char *argv[]*/){
    name[strcspn(name,"\n")]='\0';
    add_to_index(name);
 
-   strcat(name,".dat");
+
+  strcat(name,".dat");
     //void update_note();
     //void delete_note();
 
@@ -57,7 +58,7 @@ int main(/*int argc, char *argv[]*/){
         }
     }*/
     while(1){
-        printf("\033[H\033[J");
+       // printf("\033[H\033[J");
         view_note(name);
         
         add_note(name);
