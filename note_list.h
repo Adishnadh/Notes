@@ -11,11 +11,11 @@ void add_to_index(const char *filename)
     }
 
     char name[256];
-    char final_name[300];
+    //char final_name[300];
     int exists = 0;
 
     // create final filename
-    snprintf(final_name, sizeof(final_name), "%s.dat", filename);
+    //snprintf(final_name, sizeof(final_name), filename);
 
     // move to beginning for reading
     rewind(index);
@@ -26,7 +26,7 @@ void add_to_index(const char *filename)
         // remove newline
         name[strcspn(name, "\n")] = '\0';
 
-        if (strcmp(name, final_name) == 0) {
+        if (strcmp(name, filename) == 0) {
             exists = 1;
             break;
         }
@@ -34,8 +34,8 @@ void add_to_index(const char *filename)
 
     // add only if not exists
     if (!exists) {
-        fprintf(index, "%s\n", final_name);
-        printf("Added to index: %s\n", final_name);
+        fprintf(index, "%s\n", filename);
+        printf("Added to index: %s\n", filename);
     }
     else {
         printf("File already indexed\n");

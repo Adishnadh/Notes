@@ -75,7 +75,7 @@ void view_note(char fname[20]){
     printf("\n--------------------\n");
 }
 
-/*void update_note(){
+void update_note(const char name[20]){
     FILE * file = fopen(name,"rb");
     if(file == NULL){
         printf("no notes found");
@@ -95,9 +95,9 @@ void view_note(char fname[20]){
     char buffer[1024];
     char time_buffer[64];
 
-    view_note();
+    //view_note();
 
-    printf("enter number the notes to be updated");
+    printf("enter number the notes to be updated :");
     scanf("%d",&target);
     
     while(fread(&content_len, sizeof(int), 1, file)){
@@ -162,7 +162,7 @@ void view_note(char fname[20]){
     remove(name);
     rename("temp.dat", name);
 }
-void delete_note(){
+void delete_note(const char name[20]){
 
     FILE *file = fopen(name,"rb");
 
@@ -180,7 +180,7 @@ void delete_note(){
     int content_len;
     int timestamp_len;
 
-    view_note();
+    //view_note();
 
     printf("\nEnter note number to delete: ");
 
@@ -210,9 +210,9 @@ void delete_note(){
     fclose(file);
     fclose(temp);
 
-    remove("notes.dat");
+    remove(name);
 
-    rename("temp.dat","notes.dat");
+    rename("temp.dat",name);
     if (found)
         printf("Note deleted!\n");
         else
@@ -220,6 +220,6 @@ void delete_note(){
 
 
 }
-*/
+
 #endif
 
