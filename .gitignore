@@ -1,4 +1,14 @@
-*.dat
-*.ind
-note
-a.out
+# Binary
+cnote
+
+# Build artifacts
+build/
+
+# Runtime data
+data/notes/
+data/index.dat
+data/temp.dat
+
+# OS
+.DS_Store
+Thumbs.db
